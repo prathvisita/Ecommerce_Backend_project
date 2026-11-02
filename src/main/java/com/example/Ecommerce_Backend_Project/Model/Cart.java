@@ -17,5 +17,16 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String customerName;
+    private String customerEmail;
+    private String customerPhone;
+    private String customerAddress;
+    private String customerCity;
+    private String customerState;
+    private String customerCountryName;
+    private String customerPinCode;
+    private String customerCountry;
+
+
 
 }

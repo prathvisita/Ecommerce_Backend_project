@@ -17,4 +17,10 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
+
+    private String orderNumber;
+    private String orderDate;
+    private String orderStatus;
+    private String orderType;
+
 }
