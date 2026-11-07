@@ -28,4 +28,13 @@ public class ProductService {
                 .build();
         return productRepo.save(product);
     }
+
+    public void delete(Long id){
+        Product product =productRepo.findById(id).orElseThrow(() -> new RuntimeException("Product with id"+id+"not found"   ));
+        productRepo.delete(product);
+    }
+
+    public Product findproduct(String name){
+        return productRepo.findByName(name);
+    }
 }

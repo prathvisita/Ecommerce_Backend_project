@@ -25,4 +25,16 @@ public class ProductController {
     public ResponseEntity<Product> addProduct(@RequestBody ProductRequestDto productRequestDto){
     return ResponseEntity.status(HttpStatus.CREATED).body(productService.addProduct(productRequestDto));
     }
+
+    @GetMapping("/products")
+    public ResponseEntity<Product>findproduct(@RequestParam String name){
+        return ResponseEntity.ok(productService.findproduct(name));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id){
+        productService.delete(id);
+        return ResponseEntity.noContent().build();
+
+    }
 }
