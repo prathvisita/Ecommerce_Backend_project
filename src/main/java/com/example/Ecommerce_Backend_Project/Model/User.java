@@ -19,12 +19,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
-    private String password;
     private String firstName;
     private String lastName;
 
     private Integer mobileNumber;
     private String email;
+
     private LocalDate birthDate;
+
+    private String username;
+    private String password;
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id",unique = true)
+    private Cart cart;
+
 }
