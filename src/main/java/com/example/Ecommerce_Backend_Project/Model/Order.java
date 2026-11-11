@@ -28,5 +28,6 @@ public class Order {
     private String orderStatus;
     private String orderType;
 
-
+   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Product> products;
 }

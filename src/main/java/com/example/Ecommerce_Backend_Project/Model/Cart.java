@@ -21,21 +21,28 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column(unique = false,nullable = false)
     private String customerName;
 
+    @Column(unique = false,nullable = false)
     private String customerEmail;
 
+    @Column(unique =true,nullable = false)
     private String customerPhone;
 
+    @Column(unique = false,nullable = false)
     private String customerAddress;
 
+    @Column(unique = false,nullable = false)
     private String customerCity;
 
+    @Column(unique = false,nullable = false)
     private String customerState;
 
+    @Column(unique = false,nullable = false)
     private String customerPinCode;
 
+    @Column(unique = false,nullable = false)
     private String customerCountry;
 
     @OneToOne(mappedBy = "cart",cascade = CascadeType.ALL)
