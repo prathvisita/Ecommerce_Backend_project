@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,11 +39,8 @@ public class User {
     @JoinColumn(name = "cart_id",unique = true)
     private Cart cart;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_order",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "order_id"))
+    @OneToMany(mappedBy ="user",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
     @Builder.Default
-    @JsonIgnoreProperties("orders")
-    private List<Order> orders;
+    private List<Order> orders=new ArrayList<>();
 }

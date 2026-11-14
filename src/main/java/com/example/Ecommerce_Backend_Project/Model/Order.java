@@ -23,11 +23,22 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    private String orderNumber;
+    private String customerName;
+    private String customerEmail;
+    private String customerPhone;
+    private String customerAddress;
+    private String customerCity;
+    private String customerState;
+    private String customerPinCode;
+
     private String orderDate;
-    private String orderStatus;
     private String orderType;
 
-   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Product> products;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+    @OneToMany(mappedBy = "order",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems=new ArrayList<>();
 }
