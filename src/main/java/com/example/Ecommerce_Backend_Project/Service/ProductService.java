@@ -1,11 +1,10 @@
 package com.example.Ecommerce_Backend_Project.Service;
 
-import com.example.Ecommerce_Backend_Project.DTO.ProductRequestDto;
+import com.example.Ecommerce_Backend_Project.RequestDTOs.ProductRequestDto;
 import com.example.Ecommerce_Backend_Project.Model.Product;
 import com.example.Ecommerce_Backend_Project.Repository.ProductRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -32,6 +31,17 @@ public class ProductService {
     public void delete(Long id){
         Product product =productRepo.findById(id).orElseThrow(() -> new RuntimeException("Product with id"+id+"not found"   ));
         productRepo.delete(product);
+    }
+
+    public Product updateProduct(ProductRequestDto productRequestDto,String name){
+        Product product=findproduct(name);
+        product.setName(productRequestDto.getName());
+        product.setDescription(productRequestDto.getDescription());
+        product.setPrice(productRequestDto.getPrice());
+        product.setImageUrl(productRequestDto.getImageUrl());
+        product.setCategory(productRequestDto.getCategory());
+        productRepo.save(product);
+        return product;
     }
 
     public Product findproduct(String name){

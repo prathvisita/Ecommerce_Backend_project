@@ -21,10 +21,13 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "cart",cascade = CascadeType.ALL)
-    private User user;
 
-    @OneToMany(mappedBy = "cart",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "cart",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("cart")
+    private Users user;
+
+    @OneToMany(mappedBy = "cart",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("cart")
     private List<CartItem> cartItemList=new ArrayList<>();
 
 }

@@ -1,24 +1,20 @@
 package com.example.Ecommerce_Backend_Project.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 @Table(name = "Users")
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,10 +22,10 @@ public class User {
     private String firstName;
     private String lastName;
 
-    private Integer mobileNumber;
+    private String mobileNumber;
     private String email;
 
-    private LocalDate birthDate;
+    private String birthDate;
 
     private String username;
     private String password;
@@ -43,4 +39,8 @@ public class User {
     @JsonIgnoreProperties("user")
     @Builder.Default
     private List<Order> orders=new ArrayList<>();
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
+    private List<UserAdress> userAdress=new ArrayList<>();
 }

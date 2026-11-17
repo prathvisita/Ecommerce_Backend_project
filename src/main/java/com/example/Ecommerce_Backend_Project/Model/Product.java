@@ -24,4 +24,12 @@ public class Product {
     private String imageUrl;
     private String category;
 
+    //private String categoryName;
+    @OneToOne(mappedBy = "product")
+    private CartItem cartItem;
+
+    @OneToOne(mappedBy = "product")
+    private OrderItem orderItem;
+
+
 }

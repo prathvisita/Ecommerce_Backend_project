@@ -1,6 +1,6 @@
 package com.example.Ecommerce_Backend_Project.AuthController;
 
-import com.example.Ecommerce_Backend_Project.DTO.ProductRequestDto;
+import com.example.Ecommerce_Backend_Project.RequestDTOs.ProductRequestDto;
 import com.example.Ecommerce_Backend_Project.Model.Product;
 import com.example.Ecommerce_Backend_Project.Service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +36,10 @@ public class ProductController {
         productService.delete(id);
         return ResponseEntity.noContent().build();
 
+    }
+
+    @PutMapping("/{name}")
+    public ResponseEntity<Product> updateProduct(@PathVariable String name, @RequestBody ProductRequestDto productRequestDto){
+        return ResponseEntity.ok(productService.updateProduct(productRequestDto,name));
     }
 }

@@ -1,14 +1,13 @@
 package com.example.Ecommerce_Backend_Project.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,22 +22,20 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    private String customerName;
-    private String customerEmail;
-    private String customerPhone;
-    private String customerAddress;
-    private String customerCity;
-    private String customerState;
-    private String customerPinCode;
-
-    private String orderDate;
+    private LocalDateTime orderDate;
     private String orderType;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
 
 
     @OneToMany(mappedBy = "order",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderItem> orderItems=new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "adress_id")
+    @JsonIgnoreProperties("order")
+    private UserAdress userAdress;
+
 }
