@@ -38,4 +38,7 @@ public class Order {
     @JsonIgnoreProperties("order")
     private UserAdress userAdress;
 
+    @OneToOne(mappedBy = "order",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("order")
+    private Payment payment;
 }

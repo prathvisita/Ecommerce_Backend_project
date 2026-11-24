@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Entity
 @Builder
 @Table(name = "Payment")
@@ -19,10 +22,14 @@ public class Payment {
 
     private String paymentMethod;
 
-    private String paymentDate;
+    private LocalDate paymentDate;
 
-    private String paymentTime;
+    private LocalTime paymentTime;
 
     private String paymentStatus;
+
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
 }

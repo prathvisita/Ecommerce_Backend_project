@@ -9,5 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaymentRequestDto {
 
+    private Long orderId;
+    private String paymentMethod;
 
 }

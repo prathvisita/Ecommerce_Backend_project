@@ -34,25 +34,26 @@ public class CartService {
     }
 
     @Transactional
-    public Cart addCartItem(Long userid,Long productid){
+    public CartItem addCartItem(Long userid,Long productid){
         Users user=userRepo.findById(userid).orElseThrow(() -> new NullPointerException("User Not Found"));
         Product product=productRepo.findById(productid).orElseThrow(() -> new NullPointerException("Product Not Found"));
         Cart cart=user.getCart();
 ;
-        boolean cartItemExists=cart.getCartItemList().stream().anyMatch(cartItem->cartItem.getProduct().getId()==product.getId());
-        if(cartItemExists==true){
-            throw new IllegalStateException("Cart Item Already Exists");
+        CartItem cartItemExists=cart.getCartItemList().stream().filter(cartItem->cartItem.getProduct().getId()==product.getId())
+                .findFirst().orElse(null);
+        if(cartItemExists!=null){
+          cartItemExists.setQuantity(cartItemExists.getQuantity()+1);
+          throw new IllegalStateException("Cart Item Already Exists");
         }
             CartItem cartItem = CartItem.builder()
                     .product(product)
                     .cart(cart)
                     .quantity(1)
                     .build();
-
             cart.getCartItemList().add(cartItem);
             cartRepo.save(cart);
 
-            return cart;
+            return cartItem;
         }
 
         @Transactional
@@ -65,9 +66,14 @@ public class CartService {
                     .findFirst()
                     .orElse(null);
             if(isExists!=null){
-                isExists.setQuantity(isExists.getQuantity()+1);
-                cartItemRepo.delete(isExists);
-                cart.getCartItemList().remove(isExists);
+                if(isExists.getQuantity()>1) {
+                    isExists.setQuantity(isExists.getQuantity() - 1);
+                    cartItemRepo.save(isExists);
+                }else {
+                    cart.getCartItemList().remove(isExists);
+                    cartItemRepo.delete(isExists);
+                }
+
             }
            // return cart;
         }

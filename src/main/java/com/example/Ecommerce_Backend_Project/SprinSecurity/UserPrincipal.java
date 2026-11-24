@@ -1,5 +1,6 @@
 package com.example.Ecommerce_Backend_Project.SprinSecurity;
 
+import com.example.Ecommerce_Backend_Project.Model.Users;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
@@ -15,6 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
+
+    private final Users user;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -22,12 +26,12 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return user.getUsername();
     }
 
     @Override

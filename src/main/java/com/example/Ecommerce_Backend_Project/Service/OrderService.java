@@ -1,11 +1,7 @@
 package com.example.Ecommerce_Backend_Project.Service;
 
 import com.example.Ecommerce_Backend_Project.Model.*;
-import com.example.Ecommerce_Backend_Project.Repository.UserAdressRepository;
-import com.example.Ecommerce_Backend_Project.Repository.OrderItemRepo;
-import com.example.Ecommerce_Backend_Project.Repository.OrderRepo;
-import com.example.Ecommerce_Backend_Project.Repository.ProductRepo;
-import com.example.Ecommerce_Backend_Project.Repository.UserRepo;
+import com.example.Ecommerce_Backend_Project.Repository.*;
 //import jakarta.transaction.Transactional;
 import com.example.Ecommerce_Backend_Project.RequestDTOs.AdressRequestDto;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,11 +19,13 @@ public class OrderService {
     private final ProductRepo productRepo;
     private final OrderItemRepo orderItemRepo;
     private final UserAdressRepository userAdressRepository;
+    private final PaymentRepo paymentRepo;
 
     @Transactional(readOnly=true)
     public List<Order> getAllOrders(Long id){
         Users user=userRepo.findById(id).orElseThrow(() -> new NullPointerException("user with id"+id+"not found"));
         return user.getOrders();
+
     }
 
     @Transactional
@@ -68,8 +66,11 @@ public class OrderService {
     }
 
     @Transactional
-    public Order cancelOrder(Long id){
-        Order order=orderRepo.findById(id).orElseThrow(() -> new NullPointerException("order with id"+id+"not found"));
+    public Order cancelOrder(Long userid,Long id){
+        Users user=userRepo.findById(userid).orElseThrow(() -> new NullPointerException("user with id"+id+"not found"));
+        Order order=user.getOrders().stream().filter(orders->orders.getOrderItems().stream().anyMatch(orderItem -> orderItem.getProduct().getId().equals(id))).findFirst().orElse(null);
+       // Order order=orderRepo.findById(id).orElseThrow(() -> new NullPointerException("order with id"+id+"not found"));
+        user.getOrders().remove(order);
         orderRepo.delete(order);
         return order;
     }
